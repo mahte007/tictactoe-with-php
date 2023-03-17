@@ -14,11 +14,18 @@ export default function Board(props){
     const [winner, setWinner] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [boardWidth, setBoardWidth] = useState(100);
+    
 
     const navigate = useNavigate()
     const numberOfColumns = Math.sqrt(boardSize);
     const url = "http://localhost:5000/boards"
 
+    
+    useEffect(() => {
+        setBoardWidth(numberOfColumns * boardWidth);
+        console.log(boardWidth);
+    }, [])
 
 
     useEffect(() => {

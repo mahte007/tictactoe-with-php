@@ -7,6 +7,7 @@ export default function Load(props){
     const [loadedGames, setLoadedGames] = useState([]);
     const [numberOfGames, setNumberOfGames] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const url = "http://localhost:5000/boards"
     const navigate = useNavigate();
@@ -59,6 +60,16 @@ export default function Load(props){
 
     }
 
+
+
+    function handleSearch(e){
+        setSearchQuery(e.target.value);
+    }
+
+
+
+    const filteredGames = loadedGames.filter(game => game.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
+
     if(!isLoaded){
         return(
             <div>Loading...</div>
@@ -70,7 +81,8 @@ export default function Load(props){
                 <Link to="/">Back to Main Menu</Link>
                 <h2>{numberOfGames}</h2>
                 <div>
-                    {loadedGames && loadedGames.map((game, index) => {
+                <input type="text" id="search" value={searchQuery} onChange={handleSearch} placeholder="Search"></input>
+                    {filteredGames.map((game, index) => {
                         return(
                             <div key={index}>
                                 <div>{game.name}</div>

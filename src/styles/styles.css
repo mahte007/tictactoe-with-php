@@ -3,9 +3,9 @@
 }
 
 .board{
-    gap: 10px;
     width: 300px;
     height: 300px;
+    gap: 10px;
     margin: auto;
 }
 
