@@ -4,7 +4,10 @@ export default function Board(){
 
     return(
         <div>
-            <Link to="/game">Game</Link>
+            <ul>
+                <li><Link to="/game">Game</Link></li>
+                <li><Link to="/load">Load</Link></li>
+            </ul>
         </div>
     )
 }
