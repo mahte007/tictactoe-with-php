@@ -5,7 +5,6 @@ import CustomButton from "../reusable/CustomButton";
 
 export default function Board(props){
     
-    const [boardSize, setBoardSize] = useState(9);
     const [board, setBoard] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isOver, setIsOver] = useState(false);
@@ -18,7 +17,7 @@ export default function Board(props){
     
 
     const navigate = useNavigate()
-    const numberOfColumns = Math.sqrt(boardSize);
+    const numberOfColumns = Math.sqrt(props.boardSize);
     const url = "http://localhost:5000/boards"
 
     
@@ -31,7 +30,7 @@ export default function Board(props){
     useEffect(() => {
         if(props.isNewBoard){
             const newBoard = []
-            for(let i = 0; i < boardSize; i++){
+            for(let i = 0; i < props.boardSize; i++){
                 newBoard.push("");
             }
             setBoard(newBoard);

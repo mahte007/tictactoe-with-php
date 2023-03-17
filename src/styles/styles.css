@@ -95,3 +95,9 @@
     height: 25px;
     margin-top: 10px;
   }
+
+  .board-size-selector{
+    text-align: center;
+    height: 30px;
+    width: 5%;
+  }

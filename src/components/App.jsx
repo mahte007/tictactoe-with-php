@@ -15,7 +15,7 @@ export default function App() {
       <h1>Tic Tac Toe Game</h1>
       <Routes>
         <Route path="/" element={ <Home setIsNewBoard={setIsNewBoard} setBoardSize={setBoardSize} />} />
-        <Route path="/game" element={ <Board savedBoard={savedBoard} isNewBoard={isNewBoard} />} />
+        <Route path="/game" element={ <Board savedBoard={savedBoard} isNewBoard={isNewBoard} boardSize={boardSize} />} />
         <Route path="/load" element={ <Load setSavedBoard={setSavedBoard} setIsNewBoard={setIsNewBoard} />} />
       </Routes>
     </div>
