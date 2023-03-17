@@ -30,6 +30,7 @@ export default function Board(props){
         }
     }, [])
 
+    
 
     useEffect(() => {
         if(props.isNewBoard){
@@ -74,7 +75,7 @@ export default function Board(props){
 
 
 
-    const checkForWinner = () => {
+    function checkForWinner() {
         const size = Math.sqrt(board.length);
 
         for(let i = 0; i < board.length; i += size){
