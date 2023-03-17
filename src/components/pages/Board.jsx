@@ -7,12 +7,13 @@ export default function Board(props){
     
     const [board, setBoard] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isOver, setIsOver] = useState(false);
     const [nextPlayer, setNextPlayer] = useState(true);
     const [playerMove, setPlayerMove] = useState("X");
     const [winner, setWinner] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [isSaved, setIsSaved] = useState(false);
+    const [saveMessage, setSaveMessage] = useState("");
     
 
     const navigate = useNavigate()
@@ -68,6 +69,7 @@ export default function Board(props){
         setBoard(newBoard);
         setNextPlayer(!nextPlayer);
         setPlayerMove(nextPlayer ? "O" : "X");
+        setIsSaved(false);
     }
 
 
@@ -174,7 +176,12 @@ export default function Board(props){
 
         const response = await fetch(url, requestOptions);
         const json = await response.json();
-        console.log(json);
+        if(json.statusCode === 400){
+            setSaveMessage("The board cannot be empty!")
+        }else{
+            setSaveMessage("The game has been saved")
+        }
+        setIsSaved(true);
     }
 
 
@@ -192,6 +199,7 @@ export default function Board(props){
 
                 <form onSubmit={handleSave}>
                 <input type="text" placeholder="Current Game" id="gameName" /><br />
+                <p style={isSaved ? {display: "block"} : {display: "none"}}>{saveMessage}</p>
                 <CustomButton text="Save" />
                 </form>
 

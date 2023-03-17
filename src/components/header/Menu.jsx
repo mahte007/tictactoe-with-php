@@ -5,10 +5,8 @@ export default function Menu(props){
     const [size, setSize] = useState("");
 
     useEffect(() => {
-        props.setBoardSize(9);
+        setSize(9);
     }, [])
-
-
 
     function handleGameStart(){
         props.setBoardSize(size);

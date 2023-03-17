@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
 export default function Load(props){
     const [loadedGames, setLoadedGames] = useState([]);
-    const [numberOfGames, setNumberOfGames] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+
 
     const url = "http://localhost:5000/boards"
     const navigate = useNavigate();
@@ -24,7 +23,6 @@ export default function Load(props){
             );
             const data = await response.json();
             setLoadedGames(data);
-            setNumberOfGames(data.length);
         }
         fetchData();
         setIsLoaded(true);
@@ -42,7 +40,6 @@ export default function Load(props){
         console.log(status);
         
         setLoadedGames(prevGames => prevGames.filter(game => game.id !== id))
-        setNumberOfGames(prevNumGames => prevNumGames - 1);
 
     }
 
@@ -52,12 +49,6 @@ export default function Load(props){
         props.setSavedBoard(game.board);
         props.setIsNewBoard(false);
         navigate("/game");
-    }
-
-
-
-    function handleView(){
-
     }
 
 
@@ -78,17 +69,15 @@ export default function Load(props){
         return(
             <div>
                 <h1>Saved Board Games</h1>
-                <Link to="/">Back to Main Menu</Link>
-                <h2>{numberOfGames}</h2>
                 <div>
                 <input type="text" id="search" value={searchQuery} onChange={handleSearch} placeholder="Search"></input>
                     {filteredGames.map((game, index) => {
                         return(
-                            <div key={index}>
-                                <div>{game.name}</div>
-                                <button onClick={() => handleDelete(game.id)}>Delete</button> 
+                            <div key={index} className="game">
+                                <h3>{game.name}</h3>
+                                <h4>Board Size: {Math.sqrt(game.board.length)}X{Math.sqrt(game.board.length)}</h4>
                                 <button onClick={() => handleLoad(game)}>Load</button> 
-                                <button onClick={handleView}>View</button>
+                                <button onClick={() => handleDelete(game.id)}>Delete</button> 
                             </div>
                         )
                     })}

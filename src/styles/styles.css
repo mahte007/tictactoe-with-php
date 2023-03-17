@@ -1,15 +1,22 @@
+html {
+    background-color: #f2f2f2;
+}
+
+
 .main > a {
     text-align: center;
     text-decoration: none;
     color: #000;
 }
 
+/* Menu */
+
 .main-menu {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f5f5f5;
+    background-color: #e8e8e8 ;
     border-radius: 10px;
     padding: 5px;
   }
@@ -47,7 +54,10 @@
     margin-top: 1rem;
     width: 8rem;
     transition: all 0.2s ease-in-out;
+    text-align: center;
   }
+  
+ 
   
   .board-size-selector:hover {
     background-color: #e9ecef;
@@ -58,6 +68,8 @@
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
   
+
+  /* Game Page */
 
 .board-container {
     justify-content: center;
@@ -103,6 +115,8 @@
     color: #00f;
 }
 
+/* Custom Alert Box */
+
 .alert-box {
     position: fixed;
     top: 0;
@@ -144,6 +158,8 @@
     height: 30px;
   }
 
+  /* Save option on game page */
+
   .board-container > form {
     position: absolute;
     left: 2%;
@@ -159,8 +175,67 @@
     margin-top: 10px;
   }
 
-  .board-size-selector{
-    text-align: center;
-    height: 30px;
-    width: 5%;
+  .board-container > form > input {
+    width: 100%;
   }
+
+
+
+  /* Load Page */
+
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  input[type="text"] {
+    font-size: 18px;
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    width: 20%;
+  }
+  
+  div.game {
+    width: 50%;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  div.game h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0 15px;
+  }
+  
+  div.game button {
+    background-color: #0077cc;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin-right: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  div.game button:hover {
+    background-color: #005ea6;
+  }
+  
+  div.game button:last-child {
+    background-color: #ccc;
+    color: black;
+  }
+  
+  div.game button:last-child:hover {
+    background-color: #b3b3b3;
+  }
+  
