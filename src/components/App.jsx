@@ -6,16 +6,16 @@ import Load from "./pages/Load";
 
 export default function App() {
 
-  const [boardSize, setBoardSize] = useState(9);
-  const [board, setBoard] = useState();
+  const [savedBoard, setSavedBoard] = useState("");
+  const [isNewBoard, setIsNewBoard] = useState(true);
   
   return (
     <div>
       <h1>Tic Tac Toe Game</h1>
       <Routes>
-        <Route path="/" element={ <Home />} />
-        <Route path="/game" element={ <Board boardSize={boardSize} />} />
-        <Route path="/load" element={ <Load />} />
+        <Route path="/" element={ <Home setIsNewBoard={setIsNewBoard} />} />
+        <Route path="/game" element={ <Board savedBoard={savedBoard} isNewBoard={isNewBoard} />} />
+        <Route path="/load" element={ <Load setSavedBoard={setSavedBoard} setIsNewBoard={setIsNewBoard} />} />
       </Routes>
     </div>
   );

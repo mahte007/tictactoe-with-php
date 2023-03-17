@@ -7,7 +7,6 @@ export default function Board(props){
     
     const [boardSize, setBoardSize] = useState(9);
     const [board, setBoard] = useState([]);
-    const [isNewBoard, setIsNewBoard] = useState(true);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isOver, setIsOver] = useState(false);
     const [nextPlayer, setNextPlayer] = useState(true);
@@ -21,15 +20,29 @@ export default function Board(props){
     const url = "http://localhost:5000/boards"
 
 
+
     useEffect(() => {
-        if(isNewBoard){
+        if(props.isNewBoard){
             const newBoard = []
             for(let i = 0; i < boardSize; i++){
                 newBoard.push("");
             }
             setBoard(newBoard);
-            setIsLoaded(true);
+            
+        }else{
+            const savedBoard = []
+            if(props.savedBoard){
+                for(let i in props.savedBoard){
+                    props.savedBoard[i] === "0"
+                    ? 
+                    savedBoard.push("")
+                    :
+                    props.savedBoard[i] === "1" ? savedBoard.push("X") : savedBoard.push("O")
+                }
+            }
+            setBoard(savedBoard);
         }
+            setIsLoaded(true);
     }, [])
 
 
