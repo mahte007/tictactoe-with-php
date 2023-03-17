@@ -13,17 +13,20 @@ export default function Board(props){
     const [winner, setWinner] = useState(null);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-    const [boardWidth, setBoardWidth] = useState(100);
     
 
     const navigate = useNavigate()
     const numberOfColumns = Math.sqrt(props.boardSize);
     const url = "http://localhost:5000/boards"
 
-    
+
+
     useEffect(() => {
-        setBoardWidth(numberOfColumns * boardWidth);
-        console.log(boardWidth);
+        if(isLoaded){
+            const gameBoard = document.getElementById("game-board");
+            gameBoard.style.width = (numberOfColumns * 100) + "px";
+
+        }
     }, [])
 
 
@@ -45,11 +48,12 @@ export default function Board(props){
                     :
                     props.savedBoard[i] === "1" ? savedBoard.push("X") : savedBoard.push("O")
                 }
+                props.setBoardSize(savedBoard.length);
             }
             setBoard(savedBoard);
         }
             setIsLoaded(true);
-    }, [])
+    }, [props.boardSize])
 
 
 
@@ -180,7 +184,7 @@ export default function Board(props){
     }else{
         return(
             <div className="board-container">
-                <div className="board" style={{display: "grid", gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`}}>
+                <div className="board" id="game-board" style={{display: "grid", gridTemplateColumns: `repeat(${numberOfColumns}, 1fr)`}}>
                     {board.map((val, index) => {
                         return <div className="cells" key={index} onClick={() => {handlePlayerMove(index)}} id={index}>{val}</div>
                     })}
