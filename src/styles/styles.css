@@ -1,5 +1,4 @@
 .board-container {
-    display: flex;
     justify-content: center;
 }
 
@@ -80,4 +79,19 @@
     border-radius: 3px;
     width: 30%;
     height: 30px;
+  }
+
+  .board-container > form {
+    position: absolute;
+    left: 2%;
+    top: 10%;
+  }
+
+  .board-container > form > button {
+    color: black;
+    background-color: white;
+    border-radius: 3px;
+    width: 35%;
+    height: 25px;
+    margin-top: 10px;
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CustomAlert from "../reusable/CustomAlert";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../reusable/CustomButton";
 
 export default function Board(props){
     
@@ -16,7 +17,8 @@ export default function Board(props){
     const [alertMessage, setAlertMessage] = useState("");
 
     const navigate = useNavigate()
-    const numberOfColumns = 3;
+    const numberOfColumns = Math.sqrt(boardSize);
+    const url = "http://localhost:5000/boards"
 
 
     useEffect(() => {
@@ -117,6 +119,43 @@ export default function Board(props){
         navigate('/')
     }
 
+
+
+    async function handleSave(e){
+        e.preventDefault();
+
+        const gameName = document.getElementById("gameName");
+        const requestBodyBoard = []
+
+        for(let i in board){
+            board[i] === "" 
+            ?
+            requestBodyBoard.push("0")
+            :
+            board[i] === "X" ? requestBodyBoard.push("1") : requestBodyBoard.push("2");
+
+        }
+
+        const requestBody = {
+            "board": requestBodyBoard.join(""),
+            "name": gameName.value
+        };
+
+        console.log(requestBody);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(requestBody)
+        };
+
+        const response = await fetch(url, requestOptions);
+        const json = await response.json();
+        console.log(json);
+    }
+
+
+
     if(!isLoaded){
         return(<div>Loading...</div>)
     }else{
@@ -127,6 +166,12 @@ export default function Board(props){
                         return <div className="cells" key={index} onClick={() => {handlePlayerMove(index)}} id={index}>{val}</div>
                     })}
                 </div>
+
+                <form onSubmit={handleSave}>
+                <input type="text" placeholder="Current Game" id="gameName" /><br />
+                <CustomButton text="Save" />
+                </form>
+
                 {showAlert && <CustomAlert message={alertMessage} alertTitle="Game Over" buttonText="Home Page" onClose={handleCloseAlert} />}
             </div>
         )
