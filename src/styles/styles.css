@@ -179,7 +179,15 @@ html {
     width: 100%;
   }
 
-
+  .board-container > button {
+    color: black;
+    background-color: white;
+    border-radius: 3px;
+    width: 10%;
+    height: 25px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
 
   /* Load Page */
 

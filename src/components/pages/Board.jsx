@@ -18,7 +18,7 @@ export default function Board(props){
 
     const navigate = useNavigate()
     const numberOfColumns = Math.sqrt(props.boardSize);
-    const url = "http://localhost:5000/boards"
+    const url = "http://localhost:80/api/boards"
 
 
 
@@ -35,11 +35,10 @@ export default function Board(props){
     useEffect(() => {
         if(props.isNewBoard){
             const newBoard = []
-            for(let i = 0; i < props.boardSize; i++){
+            for(let i = 0; i < 9; i++){
                 newBoard.push("");
             }
             setBoard(newBoard);
-            
         }else{
             const savedBoard = []
             if(props.savedBoard){
@@ -61,7 +60,6 @@ export default function Board(props){
 
 
     const handlePlayerMove = (index) => {
-        console.log(board[index]);
         if(board[index] !== ""){
             return
         }
@@ -71,17 +69,26 @@ export default function Board(props){
         setNextPlayer(!nextPlayer);
         setPlayerMove(nextPlayer ? "O" : "X");
         setIsSaved(false);
+        props.setIsNewBoard(false);
     }
 
 
 
     function checkForWinner() {
         const size = Math.sqrt(board.length);
+        let isDraw = true;
+        let isEmpty = true;
 
         for(let i = 0; i < board.length; i += size){
             const row = board.slice(i, i + size);
             if(row.every((val) => val === row[0] && val !== "")){
                 setWinner(row[0]);
+            }
+            if(row.includes("")) {
+                isDraw = false;
+            }
+            if (!row.every((val) => val === "")) {
+                isEmpty = false;
             }
         }
 
@@ -93,6 +100,12 @@ export default function Board(props){
             if(column.every((val) => val === column[0] && val !== "")){
                 setWinner(column[0]);
             }
+            if(column.includes("")) {
+                isDraw = false;
+            }
+            if (!column.every((val) => val === "")) {
+                isEmpty = false;
+            }
         }
 
         const diagonal1 = [];
@@ -102,6 +115,12 @@ export default function Board(props){
         if(diagonal1.every((val) => val === diagonal1[0] && val !== "")){
             setWinner(diagonal1[0]);
         }
+        if(diagonal1.includes("")) {
+            isDraw = false;
+        }
+        if (!diagonal1.every((val) => val === "")) {
+            isEmpty = false;
+        }
 
         const diagonal2 = [];
         for(let i = size - 1; i < board.length - 1; i += size -1){
@@ -110,9 +129,26 @@ export default function Board(props){
         if(diagonal2.every((val) => val === diagonal2[0] && val !== "")){
             setWinner(diagonal2[0]);
         }
+        if(diagonal2.includes("")) {
+            isDraw = false;
+        }
+        if (!diagonal2.every((val) => val === "")) {
+            isEmpty = false;
+        }
+
+        if(isDraw && !isEmpty){
+            setWinner("Draw")
+        }
+
     }
 
-
+    const resetBoard = () => {
+        const newBoard = []
+        for(let i = 0; i < 9; i++){
+            newBoard.push("");
+        }
+        setBoard(newBoard);
+    }
 
     useEffect(() => {
         checkForWinner();
@@ -122,11 +158,12 @@ export default function Board(props){
 
     useEffect(() => {
         if(winner !== null && winner !== undefined){
-            console.log(winner);
             if(winner === "X"){
                 setAlertMessage("The Winner is Player 1");
             }else if(winner === "O"){
                 setAlertMessage("The Winner is Player 2");
+            }if(winner === "Draw"){
+                setAlertMessage("The Game is a Draw!")
             }
             handleAlert();
         }
@@ -167,7 +204,6 @@ export default function Board(props){
             "name": gameName.value
         };
 
-        console.log(requestBody);
 
         const requestOptions = {
             method: 'POST',
@@ -201,8 +237,9 @@ export default function Board(props){
                 <form onSubmit={handleSave}>
                 <input type="text" placeholder="Current Game" id="gameName" /><br />
                 <p style={isSaved ? {display: "block"} : {display: "none"}}>{saveMessage}</p>
-                <CustomButton text="Save" />
+                <CustomButton text="Save" /><br/>
                 </form>
+                <button onClick={resetBoard}>Reset</button>
 
                 {showAlert && <CustomAlert message={alertMessage} alertTitle="Game Over" buttonText="Home Page" onClose={handleCloseAlert} />}
             </div>

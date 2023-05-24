@@ -1,22 +1,15 @@
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Menu(props){
-    const [size, setSize] = useState("");
 
-    useEffect(() => {
-        setSize(9);
-    }, [])
+    const navigate = useNavigate();
+
 
     function handleGameStart(){
-        props.setBoardSize(size);
+        navigate("/game");
     }
-
-
-    function handleSizeChange(e){
-        setSize(e.target.value);
-    }
-
 
 
     return(
@@ -25,13 +18,6 @@ export default function Menu(props){
                 <li><Link to="/game" onClick={() => {props.setIsNewBoard(true); handleGameStart()}}>Game</Link></li>
                 <li><Link to="/load">Load</Link></li>
             </ul>
-            <select id="boardSize" className="board-size-selector" onChange={handleSizeChange}>
-                <option value="9">3X3</option>
-                <option value="16">4X4</option>
-                <option value="25">5X5</option>
-                <option value="36">6X6</option>
-                <option value="49">7X7</option>
-            </select>
         </div>
     )
 }

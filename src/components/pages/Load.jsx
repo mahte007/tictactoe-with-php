@@ -8,7 +8,7 @@ export default function Load(props){
     const [searchQuery, setSearchQuery] = useState("");
 
 
-    const url = "http://localhost:5000/boards"
+    const url = "http://localhost:80/api/boards"
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,9 +75,9 @@ export default function Load(props){
                         return(
                             <div key={index} className="game">
                                 <h3>{game.name}</h3>
-                                <h4>Board Size: {Math.sqrt(game.board.length)}X{Math.sqrt(game.board.length)}</h4>
+                                <h4>Saved at: {game.saved_at}</h4>
                                 <button onClick={() => handleLoad(game)}>Load</button> 
-                                <button onClick={() => handleDelete(game.id)}>Delete</button> 
+                                <button onClick={() => handleDelete(game.id)}>Delete</button>
                             </div>
                         )
                     })}
